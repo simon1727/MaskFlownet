@@ -15,9 +15,9 @@ By Shengyu Zhao, Yilun Sheng, Yue Dong, Eric I-Chao Chang, Yan Xu.
 
 ## Introduction
 
-![mask_visualization](./images/mask_visualization-image.jpg)
+![mask_visualization](./images/mask_visualization.gif)
 
-Feature warping is a core technique in optical flow estimation; however, the ambiguity caused by occluded areas during warping is a major problem that remains unsolved. We propose an asymmetric occlusion-aware feature matching module, which can learn a rough occlusion mask that filters useless (occluded) areas immediately after feature warping without any explicit supervision. The proposed module can be easily integrated into end-to-end network architectures and enjoys performance gains while introducing negligible computational cost. The learned occlusion mask can be further fed into a subsequent network cascade with dual feature pyramids with which we achieve state-of-the-art performance. For more details, please refer to our [paper]().
+Feature warping is a core technique in optical flow estimation; however, the ambiguity caused by occluded areas during warping is a major problem that remains unsolved. We propose an asymmetric occlusion-aware feature matching module, which can learn a rough occlusion mask that filters useless (occluded) areas immediately after feature warping without any explicit supervision. The proposed module can be easily integrated into end-to-end network architectures and enjoys performance gains while introducing negligible computational cost. The learned occlusion mask can be further fed into a subsequent network cascade with dual feature pyramids with which we achieve state-of-the-art performance. For more details, please refer to our [paper](https://arxiv.org/pdf/2003.10955.pdf).
 
 This repository includes:
 
@@ -78,6 +78,14 @@ For example,
 - to do validation for *MaskFlownet-S* on checkpoint `fffMar16`, run `python main.py MaskFlownet_S.yaml -g 0 -c fffMar16 --valid` (the output will be under `./logs/val/`).
 
 - to do prediction for *MaskFlownet* on checkpoint `000Mar17`, run `python main.py MaskFlownet.yaml -g 0 -c 000Mar17 --predict` (the output will be under `./flows/`).
+
+## Inferrence on New Data
+
+For those who do not wish to train the model and would purely like to obtain flow images from a pretrained model on their own data, please use predict_new_data.py. You do not need to download any of the optical flow datasets to use predict_new_data.py, although you will have to additionally pip install flow_vis and moviepy. The functions provide a means to load a model and perform inference on a given pair of images or to obtain a series of flow images corresponding to the movement between component images of a given video without the need to download optical flow datasets. These can be called from another script or you can call the program from a terminal/Anaconda prompt like so:
+
+- to obtain a video composed of the flow images corresponding to `input_video.mp4`, run `python predict_new_data.py C:/Users/my_username/flow_video_filepath.mp4 MaskFlownet.yaml --video_filepath C:/Users/my_username/input_video.mp4 -g 0 -c 8caNov12`
+
+- to obtain a flow image from 2 input images `image_1.png` and `image_2.png`, run `python predict_new_data.py C:/Users/my_username/flow_image_filepath.png MaskFlownet.yaml --image_1 C:/Users/my_username/image_1.png --image_2 C:/Users/my_username/image_2.png -g 0 -c 8caNov12`
 
 ## Acknowledgement
 
